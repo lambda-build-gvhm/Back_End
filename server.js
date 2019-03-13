@@ -13,10 +13,9 @@ server.use(cors());
 server.use(express.json());
 
 const private = (req, res, next) => {
-  const secret = "its a secret"; //needed to create secret due to no env file in development.
   const token = req.headers.authorization;
   if (token) {
-    jwt.verify(token, secret /*see above*/, (err, decodeToken) => {
+    jwt.verify(token, process.env.SECRET, (err, decodeToken) => {
       if (err) {
         res.status(400).json({ message: "No token found", err });
       } else {
