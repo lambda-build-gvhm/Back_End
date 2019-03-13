@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const dataRoute = require("./dataRoute");
+const updateRoute = require("./updateRoute");
 const registerRoute = require("./registerRoute");
 const loginRoute = require("./loginRoute");
 const helmet = require("helmet");
@@ -13,11 +13,12 @@ server.use(cors());
 server.use(express.json());
 
 const private = (req, res, next) => {
+  const secret = "its a secret"; //needed to create secret due to no env file in development.
   const token = req.headers.authorization;
   if (token) {
-    jwt.verify(token, process.env.SECRET, (err, decodeToken) => {
+    jwt.verify(token, secret /*see above*/, (err, decodeToken) => {
       if (err) {
-        res.status(400).json({ message: "No token found" });
+        res.status(400).json({ message: "No token found", err });
       } else {
         req.decodeToken = decodeToken;
         next();
@@ -27,8 +28,10 @@ const private = (req, res, next) => {
     res.status(401).json({ message: "You are not authenticated" });
   }
 };
+server.use("/html", express.static("./incident_severity_map.html"));
+
 server.use("/api/register", registerRoute);
 server.use("/api/login", loginRoute);
-server.use("/api/dataPage", private, dataRoute);
+server.use("/api/update", private, updateRoute);
 
 module.exports = server;
