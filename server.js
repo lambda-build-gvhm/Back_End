@@ -2,9 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const updateRoute = require("./updateRoute");
+const deleteRoute = require("./deleteRoute");
 const registerRoute = require("./registerRoute");
 const loginRoute = require("./loginRoute");
+const updateRoute = require("./updateRoute");
 const helmet = require("helmet");
 const server = express();
 
@@ -44,6 +45,7 @@ server.use("/html", [
 
 server.use("/api/register", registerRoute);
 server.use("/api/login", loginRoute);
-server.use("/api/update", private, updateRoute);
+server.use("/api/update", updateRoute);
+server.use("/api/delete", private, deleteRoute);
 
 module.exports = server;
