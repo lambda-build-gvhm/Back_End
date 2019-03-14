@@ -32,7 +32,10 @@ const staticPath = __dirname + "/StaticFiles";
 
 server.use("/html", [
   function(request, response, next) {
-    response.set("X-Frame-Options", "allow-from http://localhost:5000/");
+    response.set(
+      "X-Frame-Options",
+      "allow-from https://gvheatmap.herokuapp.com/"
+    );
     next();
   },
   express.static(staticPath)
