@@ -27,7 +27,17 @@ const private = (req, res, next) => {
     res.status(401).json({ message: "You are not authenticated" });
   }
 };
-server.use("/html", express.static("./incident_severity_map.html"));
+
+const staticPath = __dirname + "/StaticFiles";
+
+server.use("/html", [
+  function(request, response, next) {
+    response.set("X-Frame-Options", "allow-from http://localhost:5000/");
+    next();
+  },
+  express.static(staticPath)
+]);
+// server.use("/html", express.static(staticPath));
 
 server.use("/api/register", registerRoute);
 server.use("/api/login", loginRoute);
