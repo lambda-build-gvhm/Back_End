@@ -2,9 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const updateRoute = require("./updateRoute");
+const deleteRoute = require("./deleteRoute");
 const registerRoute = require("./registerRoute");
 const loginRoute = require("./loginRoute");
+const updateRoute = require("./updateRoute");
 const helmet = require("helmet");
 const server = express();
 
@@ -27,10 +28,24 @@ const private = (req, res, next) => {
     res.status(401).json({ message: "You are not authenticated" });
   }
 };
-server.use("/html", express.static("./incident_severity_map.html"));
+
+const staticPath = __dirname + "/StaticFiles";
+
+server.use("/html", [
+  function(request, response, next) {
+    response.set(
+      "X-Frame-Options",
+      "allow-from https://gvheatmap.herokuapp.com/"
+    );
+    next();
+  },
+  express.static(staticPath)
+]);
+// server.use("/html", express.static(staticPath));
 
 server.use("/api/register", registerRoute);
 server.use("/api/login", loginRoute);
-server.use("/api/update", private, updateRoute);
+server.use("/api/update", updateRoute);
+server.use("/api/delete", private, deleteRoute);
 
 module.exports = server;
