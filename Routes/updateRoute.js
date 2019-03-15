@@ -1,6 +1,6 @@
 const updateRoute = require("express").Router();
 const bcrypt = require("bcrypt");
-const db = require("./dbConfig");
+const db = require("../data/dbConfig");
 
 updateRoute.put("/:id", async (req, res) => {
   const userChange = req.body;

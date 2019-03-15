@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch --verbose",
     "server": "nodemon index.js"
   },
   "repository": {
@@ -25,9 +25,12 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "helmet": "^3.16.0",
+    "jest": "^24.5.0",
     "jsonwebtoken": "^8.5.0",
     "knex": "^0.16.3",
     "nodemon": "^1.18.10",
-    "sqlite3": "^4.0.6"
+    "react-testing-library": "^6.0.0",
+    "sqlite3": "^4.0.6",
+    "supertest": "^4.0.2"
   }
 }
