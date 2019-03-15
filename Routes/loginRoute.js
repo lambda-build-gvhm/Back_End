@@ -8,7 +8,7 @@ const createToken = user => {
     username: user.username
   };
 
-  secret = process.env.SECRET;
+  secret = process.env.SECRET || "dont tell anyone";
 
   options = {
     expiresIn: "10m"
