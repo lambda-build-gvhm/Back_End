@@ -1,8 +1,8 @@
-const register = require("express").Router();
-const db = require("./dbConfig");
+const registerRoute = require("express").Router();
+const db = require("../data/dbConfig");
 const bcrypt = require("bcrypt");
 
-register.post("/", async (req, res) => {
+registerRoute.post("/", async (req, res) => {
   const newUser = req.body;
   const hash = bcrypt.hashSync(newUser.password, 14);
   newUser.password = hash;
@@ -11,4 +11,4 @@ register.post("/", async (req, res) => {
   res.status(201).json({ message: "registered" });
 });
 
-module.exports = register;
+module.exports = registerRoute;

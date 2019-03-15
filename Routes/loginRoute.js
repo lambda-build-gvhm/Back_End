@@ -1,4 +1,4 @@
-const db = require("./dbConfig");
+const db = require("../data/dbConfig");
 const loginRoute = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
